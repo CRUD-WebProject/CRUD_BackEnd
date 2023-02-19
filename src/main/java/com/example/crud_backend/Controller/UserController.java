@@ -2,15 +2,19 @@ package com.example.crud_backend.Controller;
 
 import com.example.crud_backend.DTO.UserRequestDTO;
 import com.example.crud_backend.Service.UserService;
-import com.example.crud_backend.domain.UserRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor //Bean 주입 -> @Autowired 대신 생성자로 사용
-@RestController
+@Controller
 @RequestMapping("user")
 public class UserController {
     private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("enroll")
     public String enroll(@RequestBody UserRequestDTO requestDTO) {

@@ -4,12 +4,17 @@ import com.example.crud_backend.DTO.PostRequestDTO;
 import com.example.crud_backend.domain.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+
+    @Autowired
+    public PostService(PostRepository postRepository) {
+        this.postRepository=postRepository;
+    }
 
     @Transactional  //메소드 실행 시 트랜잭션 시작 -> 성공 시 커밋 / 실패 시 롤백
     public Long write(PostRequestDTO requestDTO) {

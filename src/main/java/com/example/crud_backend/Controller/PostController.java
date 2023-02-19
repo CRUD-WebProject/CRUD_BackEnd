@@ -1,13 +1,19 @@
 package com.example.crud_backend.Controller;
 import com.example.crud_backend.DTO.PostRequestDTO;
 import com.example.crud_backend.Service.PostService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-@RequiredArgsConstructor //Bean 주입 -> @Autowired 대신 생성자로 사용
-@RestController
+
+@Controller
 @RequestMapping("post")
 public class PostController {
     private final PostService postsService;
+
+    @Autowired
+    public PostController(PostService postsService) {
+        this.postsService=postsService;
+    }
 
     @PostMapping("write") //요청이 들어오면
     public Long write(@RequestBody PostRequestDTO requestDTO) { //dto에 내용을 담아서 가져와
