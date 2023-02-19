@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Posts {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postID; //PK -> auto increment
+    private Long PostID; //PK -> auto increment
     @Column(length=20, nullable=false)
     private String id;
     @Column(length=100, nullable=false)
