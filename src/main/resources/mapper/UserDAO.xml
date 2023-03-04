@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crud_backend.DAO.UserDAO">
+    <select id="getInfo" resultType="com.example.crud_backend.DTO.UserDTO">
+        SELECT *
+        FROM user
+        WHERE id = #{id}
+    </select>
+    <insert id="enrollUser">
+        INSERT INTO user (id, pw, sex, age, phone, email, name)
+        VALUES (#{userDTO.id}, #{userDTO.pw}, #{userDTO.sex}, #{userDTO.age}, #{userDTO.phone}, #{userDTO.email}, #{userDTO.name})
+    </insert>
+    <update id="updateUser">
+        UPDATE user
+        SET id=#{userDTO.id}, sex=#{userDTO.sex}, age=#{userDTO.age}, phone=#{userDTO.phone}, email=#{userDTO.email}, name=#{userDTO.name}
+        WHERE id=#{id}
+    </update>
+    <delete id="deleteUser">
+        DELETE FROM user
+        WHERE id=#{id} and pw=#{pw}
+    </delete>
+    <select id="checkExist" resultType="String">
+        SELECT id
+        FROM user
+        WHERE id=#{id}
+    </select>
+    <select id="findID" resultType="String">
+        SELECT id
+        FROM user
+        WHERE name=#{name} and phone=#{phone} and email=#{email}
+    </select>
+    <select id="findPW" resultType="String">
+        SELECT pw
+        FROM user
+        WHERE id=#{id} and name=#{name}
+    </select>
+    <update id="changePW">
+        UPDATE user
+        SET pw=#{pw}
+        WHERE id=#{id}
+    </update>
+    <update id="changePW_user">
+        UPDATE user
+        SET pw=#{pw}
+        WHERE id=#{id}
+    </update>
+</mapper>
