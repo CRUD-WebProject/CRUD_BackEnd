@@ -1,24 +1,15 @@
 package com.example.crud_backend.Service;
 
-import com.example.crud_backend.DTO.CommentRequestDTO;
-import com.example.crud_backend.domain.CommentRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.crud_backend.DTO.CommentDTO;
+import org.springframework.stereotype.Component;
 
-import java.util.Map;
+import java.util.List;
 
-@Service
-public class CommentService {
-    private final CommentRepository commentRepository;
-
-    @Autowired
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository=commentRepository;
-    }
-
-    @Transactional
-    public Long write (CommentRequestDTO requestDTO) {
-        return commentRepository.save(requestDTO.toEntity()).getPostID();
-    }
+@Component
+public interface CommentService {
+    List<CommentDTO> getComments(Long postID);
+    void writeComment(CommentDTO commentDTO);
+    void updateComment(CommentDTO commentDTO);
+    void deleteComment(Long postID, Long comID);
 }
+

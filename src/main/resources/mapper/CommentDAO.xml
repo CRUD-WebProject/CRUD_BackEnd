@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.crud_backend.DAO.CommentDAO">
+    <select id="getComments" resultType="com.example.crud_backend.DTO.CommentDTO">
+        SELECT *
+        FROM comment
+        WHERE postID = #{postID}
+    </select>
+    <insert id="writeComment">
+        INSERT INTO comment(comID, postID, id, content, com_time)
+        VALUES (#{commentDTO.comID}, #{commentDTO.postID}, #{commentDTO.id}, #{commentDTO.content}, #{commentDTO.com_time})
+    </insert>
+    <update id="updateComment">
+        UPDATE comment
+        SET content = #{commentDTO.content}
+        WHERE comID=#{commentDTO.comID}
+    </update>
+    <delete id="deleteComment">인
+        DELETE FROM comment
+        WHERE postID = #{postID} and comID = #{comID}
+    </delete>
+</mapper>
