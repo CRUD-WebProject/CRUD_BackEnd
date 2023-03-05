@@ -1,5 +1,6 @@
 package com.example.crud_backend.DAO;
 
+import com.example.crud_backend.DTO.ChangePwDTO;
 import com.example.crud_backend.DTO.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,6 +16,5 @@ public interface UserDAO {
     String checkExist(String id);
     String findID(String name, String phone, String email);
     String findPW(String id, String name);
-    void changePW(String id, String pw);
-    void changePW_user(String id, String pw);
+    void changePW(@Param("changePwDTO") ChangePwDTO changePwDTO);
 }

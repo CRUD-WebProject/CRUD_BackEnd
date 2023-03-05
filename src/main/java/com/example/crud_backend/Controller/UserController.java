@@ -1,5 +1,6 @@
 package com.example.crud_backend.Controller;
 
+import com.example.crud_backend.DTO.ChangePwDTO;
 import com.example.crud_backend.DTO.UserDTO;
 import com.example.crud_backend.Service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -50,27 +51,12 @@ public class UserController {
     }
 
     @GetMapping("/findPW")
-    public Boolean findPW(@RequestParam("id") String id, @RequestParam("name") String name) {
-        if(userService.findPW(id, name) == null) return false;
-        else return true;
+    public String findPW(@RequestParam("id") String id, @RequestParam("name") String name) {
+        return userService.findPW(id, name);
     }
     @PutMapping("/changePW")
-    public ResponseEntity<HttpStatus> changePW(@RequestParam("id") String id, @RequestParam("pw") String pw, @RequestParam("check") String check) {
-        if(!pw.equals(check)) return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
-        else {
-            userService.changePW(id, pw);
-            return ResponseEntity.ok().body(HttpStatus.OK);
-        }
+    public ResponseEntity<HttpStatus> changePW(@RequestBody ChangePwDTO changePwDTO) {
+        userService.changePW(changePwDTO);
+        return ResponseEntity.ok().body(HttpStatus.OK);
     }
-    @PutMapping("/changePW_user")
-    public ResponseEntity<HttpStatus> changePW_user(@RequestParam("id") String id, @RequestParam("cur_pw") String cur_pw, @RequestParam("pw") String pw, @RequestParam("check") String check) {
-        if(cur_pw.equals(pw)) return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
-        else if(!pw.equals(check)) return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
-        else {
-            userService.changePW_user(id, pw);
-            return ResponseEntity.ok().body(HttpStatus.OK);
-        }
-    }
-
-
 }

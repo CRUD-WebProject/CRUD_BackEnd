@@ -5,6 +5,11 @@
         SELECT postID, title, id, up_time
         FROM post
     </select>
+    <select id="getPostListByType" resultType="com.example.crud_backend.DTO.PostDTO">
+        SELECT postID, title, id, up_time
+        FROM post
+        WHERE category=#{category}
+    </select>
     <select id="getPost" resultType="com.example.crud_backend.DTO.PostDTO">
         SELECT *
         FROM post

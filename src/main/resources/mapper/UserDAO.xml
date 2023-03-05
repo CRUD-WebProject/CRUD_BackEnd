@@ -36,12 +36,7 @@
     </select>
     <update id="changePW">
         UPDATE user
-        SET pw=#{pw}
-        WHERE id=#{id}
-    </update>
-    <update id="changePW_user">
-        UPDATE user
-        SET pw=#{pw}
-        WHERE id=#{id}
+        SET pw=#{changePwDTO.pw}
+        WHERE id=#{changePwDTO.id}
     </update>
 </mapper>

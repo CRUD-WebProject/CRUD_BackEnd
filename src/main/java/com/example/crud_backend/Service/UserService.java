@@ -1,5 +1,7 @@
 package com.example.crud_backend.Service;
 
+import com.example.crud_backend.DTO.ChangePwDTO;
+import com.example.crud_backend.DTO.LoginRequestDTO;
 import com.example.crud_backend.DTO.UserDTO;
 
 public interface UserService {
@@ -10,6 +12,6 @@ public interface UserService {
     String checkExist(String id);
     String findID(String name, String phone, String email);
     String findPW(String id, String name);
-    void changePW(String id, String pw);
-    void changePW_user(String id, String pw);
+    void changePW(ChangePwDTO changePwDTO);
+    String createToken(LoginRequestDTO loginRequestDTO);
 }
