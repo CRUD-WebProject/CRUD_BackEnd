@@ -16,8 +16,9 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/list")
-    public List<PostDTO> getPostList() {
-        return postService.getPostList();
+    public List<PostDTO> getPostList(@RequestParam("category") String category) {
+        if(category.equals("전체")) return postService.getPostList();
+        else return postService.getPostListByType(category);
     }
 
     @GetMapping("/get")

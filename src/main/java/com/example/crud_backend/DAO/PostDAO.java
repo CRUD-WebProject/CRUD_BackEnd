@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface PostDAO {
     List<PostDTO> getPostList();
+    List<PostDTO> getPostListByType(String category);
     PostDTO getPost(Long postID);
     void writePost(@Param("postDTO") PostDTO postDTO);
     void updatePost(Long postID, @Param("postDTO") PostDTO postDTO);

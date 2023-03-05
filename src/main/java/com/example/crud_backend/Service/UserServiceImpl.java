@@ -1,13 +1,19 @@
 package com.example.crud_backend.Service;
 
 import com.example.crud_backend.DAO.UserDAO;
+import com.example.crud_backend.DTO.ChangePwDTO;
+import com.example.crud_backend.DTO.LoginRequestDTO;
 import com.example.crud_backend.DTO.UserDTO;
+import com.example.crud_backend.Exception.APICustomException;
+import com.example.crud_backend.Exception.ErrorCodes;
+import com.example.crud_backend.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
     private final UserDAO userDAO;
+    private final JwtTokenProvider jwtTokenProvider;
     @Override
     public UserDTO getInfo(String id) {
         return userDAO.getInfo(id);
@@ -36,9 +42,19 @@ public class UserServiceImpl implements UserService{
         return userDAO.findPW(id, name);
     }
     @Override
-    public void changePW(String id, String pw) {
-        userDAO.changePW(id, pw);
+    public void changePW(ChangePwDTO changePwDTO) {
+        userDAO.changePW(changePwDTO);
     }
+
     @Override
-    public void changePW_user(String id, String pw) { userDAO.changePW_user(id, pw); }
+    public String createToken(LoginRequestDTO loginRequestDTO) {
+        UserDTO userDTO;
+        try {
+            userDTO = userDAO.getInfo(loginRequestDTO.getId());
+            if(!loginRequestDTO.getPw().equals(userDTO.getPw())) throw new APICustomException(ErrorCodes.FAIL_LOGIN);
+        } catch (NullPointerException exception) {
+            throw new APICustomException(ErrorCodes.FAIL_LOGIN);
+        }
+        return jwtTokenProvider.createToken(userDTO.getId());
+    }
 }

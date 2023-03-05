@@ -3,7 +3,6 @@ package com.example.crud_backend.Service;
 import com.example.crud_backend.DAO.PostDAO;
 import com.example.crud_backend.DTO.PostDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,10 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     private final PostDAO postDAO;
     @Override
-    public List<PostDTO> getPostList() {
-        return postDAO.getPostList();
+    public List<PostDTO> getPostList() {return postDAO.getPostList();}
+    @Override
+    public List<PostDTO> getPostListByType(String category) {
+        return postDAO.getPostListByType(category);
     }
     @Override
     public PostDTO getPost(Long postID) {

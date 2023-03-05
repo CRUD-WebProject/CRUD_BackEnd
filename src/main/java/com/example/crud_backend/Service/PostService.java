@@ -10,6 +10,7 @@ import java.util.List;
 @Component
 public interface PostService{
     List<PostDTO> getPostList();
+    List<PostDTO> getPostListByType(String category);
     PostDTO getPost(Long postID);
     void writePost(PostDTO postDTO);
     void updatePost(Long postID, PostDTO postDTO);
