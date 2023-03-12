@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Transactional
-@Component
 public interface PostService{
     List<PostDTO> getPostList();
     List<PostDTO> getPostListByType(String category);

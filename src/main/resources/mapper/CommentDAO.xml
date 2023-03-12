@@ -15,7 +15,7 @@
         SET content = #{commentDTO.content}
         WHERE comID=#{commentDTO.comID}
     </update>
-    <delete id="deleteComment">인
+    <delete id="deleteComment">
         DELETE FROM comment
         WHERE postID = #{postID} and comID = #{comID}
     </delete>
