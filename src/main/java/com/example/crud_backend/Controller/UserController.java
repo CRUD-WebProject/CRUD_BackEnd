@@ -1,12 +1,20 @@
 package com.example.crud_backend.Controller;
 
 import com.example.crud_backend.DTO.ChangePwDTO;
+import com.example.crud_backend.DTO.LoginDTO;
+import com.example.crud_backend.DTO.TokenDTO;
 import com.example.crud_backend.DTO.UserDTO;
 import com.example.crud_backend.Service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -15,12 +23,14 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/info")
-    public UserDTO getInfo(@RequestParam("id") String id) {
+    public Optional<UserDTO> getInfo(@RequestParam("id") String id) {
         return userService.getInfo(id);
     }
 
     @PostMapping("/enroll")
     public ResponseEntity<HttpStatus> enrollUser(@RequestBody UserDTO userDTO) {
+        String pw = userDTO.getPw();
+        userDTO.setPw(new BCryptPasswordEncoder().encode(pw));
         userService.enrollUser(userDTO);
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
@@ -58,5 +68,10 @@ public class UserController {
     public ResponseEntity<HttpStatus> changePW(@RequestBody ChangePwDTO changePwDTO) {
         userService.changePW(changePwDTO);
         return ResponseEntity.ok().body(HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO loginDTO) {
+        return ResponseEntity.ok(userService.login(loginDTO));
     }
 }

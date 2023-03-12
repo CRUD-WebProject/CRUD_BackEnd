@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Mapper
 @Repository
 public interface UserDAO {
-    UserDTO getInfo(String id);
+    Optional<UserDTO> getInfo(String id);
     void enrollUser(@Param("userDTO") UserDTO userDTO);
     void updateUser(String id, @Param("userDTO") UserDTO userDTO);
     void deleteUser(String id, String pw);

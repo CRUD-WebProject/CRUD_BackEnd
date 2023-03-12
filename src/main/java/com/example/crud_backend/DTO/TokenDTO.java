@@ -5,9 +5,10 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class TokenResponseDTO {
+@NoArgsConstructor
+public class TokenDTO {
     private String accessToken;
-    private String tokenType;
+    private String grantType;
+    private Long expireTime;
 }
