@@ -1,9 +1,6 @@
 package com.example.crud_backend.Controller;
 
-import com.example.crud_backend.DTO.ChangePwDTO;
-import com.example.crud_backend.DTO.LoginDTO;
-import com.example.crud_backend.DTO.TokenDTO;
-import com.example.crud_backend.DTO.UserDTO;
+import com.example.crud_backend.DTO.*;
 import com.example.crud_backend.Service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import jakarta.servlet.http.HttpServletRequest;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -73,5 +68,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO loginDTO) {
         return ResponseEntity.ok(userService.login(loginDTO));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenDTO> refresh(@RequestBody TokenDTO tokenDTO) {
+        return ResponseEntity.ok(userService.refresh(tokenDTO));
     }
 }

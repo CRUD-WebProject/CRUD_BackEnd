@@ -1,9 +1,6 @@
 package com.example.crud_backend.Service;
 
-import com.example.crud_backend.DTO.ChangePwDTO;
-import com.example.crud_backend.DTO.LoginDTO;
-import com.example.crud_backend.DTO.TokenDTO;
-import com.example.crud_backend.DTO.UserDTO;
+import com.example.crud_backend.DTO.*;
 
 import java.util.Optional;
 
@@ -17,4 +14,5 @@ public interface UserService {
     String findPW(String id, String name);
     void changePW(ChangePwDTO changePwDTO);
     TokenDTO login(LoginDTO loginDTO);
+    TokenDTO refresh(TokenDTO tokenDTO);
 }
