@@ -1,5 +1,7 @@
 package com.example.crud_backend.Controller;
+import com.example.crud_backend.DTO.LikesDTO;
 import com.example.crud_backend.DTO.PostDTO;
+import com.example.crud_backend.Service.LikesService;
 import com.example.crud_backend.Service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final LikesService likesService;
 
     @GetMapping("/list")
     public List<PostDTO> getPostList(@RequestParam("category") String category) {
@@ -46,26 +49,16 @@ public class PostController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<HttpStatus> like(@RequestParam("postID") Long postID) {
-        postService.like(postID);
+    public ResponseEntity<HttpStatus> like(@RequestBody LikesDTO likesDTO) {
+        postService.like(likesDTO.getPostID());
+        likesService.like(likesDTO);
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
 
     @PostMapping("/like_cancel")
-    public ResponseEntity<HttpStatus> like_cancel(@RequestParam("postID") Long postID) {
-        postService.like_cancel(postID);
-        return ResponseEntity.ok().body(HttpStatus.OK);
-    }
-
-    @PostMapping("/unlike")
-    public ResponseEntity<HttpStatus> unlike(@RequestParam("postID") Long postID) {
-        postService.unlike(postID);
-        return ResponseEntity.ok().body(HttpStatus.OK);
-    }
-
-    @PostMapping("/unlike_cancel")
-    public ResponseEntity<HttpStatus> unlike_cancel(@RequestParam("postID") Long postID) {
-        postService.unlike_cancel(postID);
+    public ResponseEntity<HttpStatus> like_cancel(@RequestBody LikesDTO likesDTO) {
+        postService.like_cancel(likesDTO.getPostID());
+        likesService.like_cancel(likesDTO);
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
 }

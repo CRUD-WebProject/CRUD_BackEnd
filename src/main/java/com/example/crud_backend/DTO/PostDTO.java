@@ -16,7 +16,6 @@ public class PostDTO {
     private String category;
     private LocalDateTime up_time;
     private int likes;
-    private int unlikes;
     @Builder
     public PostDTO(String id, String title, String content, String category) {
         this.id=id;

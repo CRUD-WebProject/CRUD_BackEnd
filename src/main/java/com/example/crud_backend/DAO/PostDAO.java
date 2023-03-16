@@ -17,6 +17,4 @@ public interface PostDAO {
     void deletePost(Long postID);
     void like(Long postID);
     void like_cancel(Long postID);
-    void unlike(Long postID);
-    void unlike_cancel(Long postID);
 }
