@@ -41,12 +41,4 @@ public class PostServiceImpl implements PostService {
     public void like_cancel(Long postID) {
         postDAO.like_cancel(postID);
     }
-    @Override
-    public void unlike(Long postID) {
-        postDAO.unlike(postID);
-    }
-    @Override
-    public void unlike_cancel(Long postID) {
-        postDAO.unlike_cancel(postID);
-    }
 }

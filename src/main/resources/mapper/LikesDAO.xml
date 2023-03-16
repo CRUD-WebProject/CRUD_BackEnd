@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.crud_backend.DAO.LikesDAO">
+    <select id="find" resultType="String">
+        SELECT id
+        FROM likes
+        WHERE postID = #{postID} and id = #{id}
+    </select>
+    <insert id="like">
+        INSERT INTO likes (postID, id)
+        VALUES (#{likesDTO.postID}, #{likesDTO.id})
+    </insert>
+    <delete id="like_cancel">
+        DELETE FROM likes
+        WHERE postID = #{likesDTO.postID} and id = #{likesDTO.id}
+    </delete>
+</mapper>
