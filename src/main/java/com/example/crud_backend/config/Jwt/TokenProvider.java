@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -23,7 +24,8 @@ import java.util.stream.Collectors;
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer ";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60;
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;
     private final Key key;
 
     public TokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -36,19 +38,25 @@ public class TokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
         long now = (new Date()).getTime();
-        Date expireTime = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        Date accessTokenExpireTime = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(expireTime)
+                .setExpiration(accessTokenExpireTime)
+                .signWith(key, SignatureAlgorithm.HS384)
+                .compact();
+
+        String refreshToken = Jwts.builder()
+                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS384)
                 .compact();
 
         return TokenDTO.builder()
-                .accessToken(accessToken)
                 .grantType(BEARER_TYPE)
-                .expireTime(expireTime.getTime())
+                .accessToken(accessToken)
+                .accessTokenExpireTime(accessTokenExpireTime)
+                .refreshToken(refreshToken)
                 .build();
     }
 

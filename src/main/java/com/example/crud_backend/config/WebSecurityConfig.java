@@ -1,5 +1,7 @@
 package com.example.crud_backend.config;
 
+import com.example.crud_backend.config.Jwt.JwtAccessDeniedHandler;
+import com.example.crud_backend.config.Jwt.JwtAuthenticationEntryPoint;
 import com.example.crud_backend.config.Jwt.JwtSecurityConfig;
 import com.example.crud_backend.config.Jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class WebSecurityConfig {
     private final TokenProvider tokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -27,6 +31,10 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                //.exceptionHandling()
+                //.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                //.accessDeniedHandler(jwtAccessDeniedHandler)
+                //.and()
                 .authorizeHttpRequests()
                 .requestMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
